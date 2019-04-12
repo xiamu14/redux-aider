@@ -1,43 +1,20 @@
-## 常用 JS 工具集
+## Redux 辅助工具
 
 ## 安装
 
 ```
-yarn add univerdal-toolbox
+yarn add redux-aider
 ```
 
-## 工具介绍
+## 介绍
 
-### Redux 相关组合工具
+缩减 redux 样板代码
 
-#### createAction()
-
-```js
-import { createAction } from 'redux-aider';
-
-const reducers = {
-  update: (state, action) => action.payload, // key is constant
-}
-
-export const actions = createAction(Object.keys(reducers))
-
-// 在 component 中使用 action
-
-import { connect } from 'react-redux'
-
-@connect(
-  ({ userInfo }) => ({ userInfo }),
-  dispatch => ({
-    onAccept: payload => dispatch(actions.update(payload))
-  })
-)
-
-```
-
-#### createReducer()
+## 使用
 
 ```js
-import { createReducer, createAction } from 'redux-aider'
+// store/user_info.js
+import { createAction, createReducer } from 'redux-aider';
 
 // just care reducers
 const reducerFunc = {
@@ -46,17 +23,26 @@ const reducerFunc = {
 
 // reducer config
 const userInfo = {
-  name: 'userInfo', // store name
+  name: 'userInfo', // state name
   initState: {},
-  reducerFuc,
+  reducerFunc,
 }
-const actions = createAction(userInfo);
-const reducers = createReducer(userInfo);
 
-export default userInfo
+export const userInfoActions = createAction(userInfo);
+export const reducer = createReducer(userInfo);
 
-// store/index.js
-import userInfo from './user_info'
+```
+```js
+// 在 component 中使用 action
 
-const reducers = combineReducers(createReducer([userInfo]))
+import { connect } from 'react-redux';
+import { userInfoActions } from 'store/user_info.js';
+
+@connect(
+  ({ userInfo }) => ({ userInfo }),
+  dispatch => ({
+    onAccept: payload => dispatch(userInfoActions.accept(payload))
+  })
+)
+
 ```
