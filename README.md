@@ -67,4 +67,4 @@ import { userAction } from 'store/user_info.js';
 
 ```
 
-![演示代码](https://codesandbox.io/s/3r2xv2ovy5)
+[演示代码](https://codesandbox.io/s/3r2xv2ovy5)
