@@ -14,7 +14,7 @@ yarn add redux-aider
 
 ```js
 // store/user_info.js
-import { createAction, createReducer } from 'redux-aider';
+import { createAction, createReducer, combineReducer } from 'redux-aider';
 
 // just care reducers
 const reducerFunc = {
@@ -32,6 +32,26 @@ export const userInfoActions = createAction(userInfo);
 export const reducer = createReducer(userInfo);
 
 ```
+```js
+// store/index.js
+import {createStore } from "redux";
+import { userReducer, userAction, combineReducers } from "./user";
+
+// const store = createStore(userReducer);
+const store = createStore(combineReducers([userReducer]));
+
+console.log(store.getState());
+// console.log: {name: {}}
+
+store.dispatch(userAction.add({ name: "2" }));
+
+console.log(store.getState());
+// comsole.log: {name: "2"}
+
+export default store;
+
+```
+
 ```js
 // 在 component 中使用 action
 
