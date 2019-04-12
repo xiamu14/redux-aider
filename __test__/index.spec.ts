@@ -35,6 +35,6 @@ test('createAction', () => {
 
 test('createReducer', () => {
   expect(
-    createReducer(userInfo).userInfo({}, { type: 'userInfo/accept', payload: 2 })
+    createReducer(userInfo)({}, { type: 'userInfo/accept', payload: 2 })
   ).toBe(2)
 })

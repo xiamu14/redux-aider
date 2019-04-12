@@ -14,7 +14,7 @@ yarn add redux-aider
 
 ```js
 // store/user_info.js
-import { createAction, createReducer, combineReducer } from 'redux-aider';
+import { createAction, createReducer } from 'redux-aider';
 
 // just care reducers
 const reducerFunc = {
@@ -22,23 +22,23 @@ const reducerFunc = {
 }
 
 // reducer config
-const userInfo = {
-  name: 'userInfo', // state name
+const userState = {
+  name: 'user', // state name
   initState: {},
   reducerFunc,
 }
 
-export const userInfoActions = createAction(userInfo);
-export const reducer = createReducer(userInfo);
+export const userAction = createAction(userState);
+export const user = createReducer(userState);
 
 ```
 ```js
 // store/index.js
-import {createStore } from "redux";
-import { userReducer, userAction, combineReducers } from "./user";
+import {createStore, combineReducers } from "redux";
+import { user, userAction  } from "./user";
 
 // const store = createStore(userReducer);
-const store = createStore(combineReducers([userReducer]));
+const store = createStore(combineReducers({user}));
 
 console.log(store.getState());
 // console.log: {name: {}}
@@ -56,12 +56,12 @@ export default store;
 // 在 component 中使用 action
 
 import { connect } from 'react-redux';
-import { userInfoActions } from 'store/user_info.js';
+import { userAction } from 'store/user_info.js';
 
 @connect(
-  ({ userInfo }) => ({ userInfo }),
+  ({ user }) => ({ user }),
   dispatch => ({
-    onAccept: payload => dispatch(userInfoActions.accept(payload))
+    onAccept: payload => dispatch(userAction.add(payload))
   })
 )
 
